@@ -49,8 +49,10 @@ const sketch = (p) => {
 
     const reverbLevelNode = document.getElementById("reverb_level");
     const config = { attributes: true, childList: true, subtree: true };
+    reverbLevelNode.innerText = 0.3;
+    console.log("set reverb", +reverbLevelNode.dataset.reverbLevel);
     reverb.set({
-      roomSize: +reverbLevelNode.dataset.reverbLevel / MAX_ROOM_SIZE,
+      roomSize: +reverbLevelNode.dataset.reverbLevel,
     });
 
     const callback = (mutationList, observer) => {
@@ -59,7 +61,7 @@ const sketch = (p) => {
           console.log("A child node has been added or removed.");
         } else if (mutation.type === "attributes") {
           reverb.set({
-            roomSize: +reverbLevelNode.dataset.reverbLevel / MAX_ROOM_SIZE,
+            roomSize: +reverbLevelNode.dataset.reverbLevel,
           });
         }
       }
@@ -112,9 +114,7 @@ const sketch = (p) => {
     }
   };
 
-  p.keyPressed = () => {
-
-  };
+  p.keyPressed = () => {};
 
   async function generateAndDraw() {
     if (isGenerating) {
