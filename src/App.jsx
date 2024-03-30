@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import Player from "./ai-instrument"
 import data from "../instabase.json"
 import { GoArrowRight } from "react-icons/go"
-import { Canvas, useFrame } from "@react-three/fiber"
 
 export default function App() {
   const roomData = data.query_result.data.rows.slice(1, 10)
