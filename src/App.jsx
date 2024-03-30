@@ -42,7 +42,6 @@ export default function App() {
       style={{
         display: "flex",
         gap: "40px",
-        backgroundImage: url("paper.gif");
       }}
     >
       <div
