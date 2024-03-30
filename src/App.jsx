@@ -4,17 +4,17 @@ import data from "../instabase.json"
 import { GoArrowRight } from "react-icons/go"
 
 export default function App() {
-  const roomData = data.query_result.data.rows.slice(1, 10)
+  const roomData = data.query_result.data.rows.slice(1, 10);
 
-  const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id)
-  const [selectedRoomData, setSelectedRoomData] = useState(null)
+  const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id);
+  const [selectedRoomData, setSelectedRoomData] = useState(null);
 
   useEffect(() => {
     const thisRoomData = roomData.find(
-      (item) => item.room_id === selectedRoomId
-    )
-    setSelectedRoomData(thisRoomData)
-  }, [selectedRoomId])
+      (item) => item.room_id == selectedRoomId
+    );
+    setSelectedRoomData(thisRoomData);
+  }, [selectedRoomId]);
 
   return (
     <div
@@ -93,8 +93,7 @@ export default function App() {
             }}
             value={selectedRoomId}
             onChange={(e) => {
-              console.log("SELECTION VALUE", e.target.value)
-              setSelectedRoomId(e.target.value)
+              setSelectedRoomId(e.target.value);
             }}
           >
             {roomData.map((item) => (
@@ -108,7 +107,13 @@ export default function App() {
               color: "white",
             }}
           >
-            Room reverb level: 0.3
+            Room reverb level:{" "}
+            <span
+              id="reverb_level"
+              data-reverb-level={selectedRoomData?.square_meter}
+            >
+              {selectedRoomData?.square_meter}
+            </span>
           </div>
         </div>
       </div>
@@ -141,5 +146,5 @@ export default function App() {
         </div>
       </div>
     </div>
-  )
+  );
 }
