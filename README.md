@@ -4,7 +4,7 @@ https://designersdecode.gumroad.com/
 
 ## Prerequisites
 
-- Python: I suggest you install a virtual environment with Miniconda.
+- Python: I suggest you install a virtual environment.
 - [Node.js](https://nodejs.org/en): to run the Vitejs dev server.
 
 ## How-to
