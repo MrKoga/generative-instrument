@@ -6,9 +6,18 @@ import { Canvas, useFrame } from '@react-three/fiber'
 
 
 export default function App() {
-  const roomData = data.query_result.data.rows.slice(1, 10)
+  const roomData = data.query_result.data.rows.slice(1, 10);
 
   const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id)
+  const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id);
+  const [selectedRoomData, setSelectedRoomData] = useState(null);
+
+  useEffect(() => {
+    const thisRoomData = roomData.find(
+      (item) => item.room_id == selectedRoomId
+    );
+    setSelectedRoomData(thisRoomData);
+  }, [selectedRoomId]);
 
   return (
     <div
@@ -83,8 +92,7 @@ export default function App() {
             }}
             value={selectedRoomId}
             onChange={(e) => {
-              console.log("SELECTION VALUE", e.target.value)
-              setSelectedRoomId(e.target.value)
+              setSelectedRoomId(e.target.value);
             }}
           >
             {roomData.map((item) => (
@@ -100,12 +108,10 @@ export default function App() {
           >
             Room reverb level:{" "}
             <span
-              style={{
-                color: "white",
-                fontSize: "20px",
-              }}
+              id="reverb_level"
+              data-reverb-level={selectedRoomData?.square_meter}
             >
-              0.3
+              {selectedRoomData?.square_meter}
             </span>
           </div>
         </div>
@@ -139,16 +145,5 @@ export default function App() {
         </div>
       </div>
     </div>
-  )
-}
-
-
-function MyCanvas() {
-  return (
-    <Canvas>
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <Box />
-    </Canvas>
-  )
+  );
 }

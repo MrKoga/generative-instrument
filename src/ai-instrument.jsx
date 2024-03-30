@@ -18,6 +18,7 @@ const sketch = (p) => {
   let isGenerating = false;
   let toggleGenerated = false;
   let roomSize = 0.5;
+  const MAX_ROOM_SIZE = 400;
 
   const players = [];
   const reverb = new Tone.Freeverb(roomSize, 1000).toDestination();
@@ -45,6 +46,27 @@ const sketch = (p) => {
     canvas = p.createCanvas(width, height);
     pg = p.createGraphics(width, height);
     aiImg = p.createGraphics(width, height);
+
+    const reverbLevelNode = document.getElementById("reverb_level");
+    const config = { attributes: true, childList: true, subtree: true };
+    reverb.set({
+      roomSize: +reverbLevelNode.dataset.reverbLevel / MAX_ROOM_SIZE,
+    });
+
+    const callback = (mutationList, observer) => {
+      for (const mutation of mutationList) {
+        if (mutation.type === "childList") {
+          console.log("A child node has been added or removed.");
+        } else if (mutation.type === "attributes") {
+          reverb.set({
+            roomSize: +reverbLevelNode.dataset.reverbLevel / MAX_ROOM_SIZE,
+          });
+        }
+      }
+    };
+
+    const observer = new MutationObserver(callback);
+    observer.observe(reverbLevelNode, config);
 
     canvas.parent(document.querySelector("#player-container"));
 
@@ -91,17 +113,7 @@ const sketch = (p) => {
   };
 
   p.keyPressed = () => {
-    if (p.key === "[") {
-      roomSize -= 0.1;
-      if (roomSize < 0) roomSize = 0;
-    } else if (p.key === "]") {
-      roomSize += 0.1;
-      if (roomSize > 1) roomSize = 1;
-    }
-    reverb.set({
-      roomSize: roomSize,
-    });
-    console.log("room size", roomSize);
+
   };
 
   async function generateAndDraw() {
