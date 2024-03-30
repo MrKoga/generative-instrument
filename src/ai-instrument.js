@@ -54,6 +54,11 @@ const sketch = (p) => {
 
     players[0].load("/kick.mp3");
     players[1].load("/snare.mp3");
+    players[3].load("/kick.mp3");
+    players[4].load("/snare.mp3");
+    players[5].load("/kick.mp3");
+    players[6].load("/snare.mp3");
+    players[7].load("/kick.mp3");
 
     p.noLoop();
     p.redraw();
@@ -122,6 +127,8 @@ const sketch = (p) => {
     generateButton.html("generate");
 
     p.image(aiImg, 0, 0);
+
+    // TODO: replace audio with generated audio
   }
 };
 
