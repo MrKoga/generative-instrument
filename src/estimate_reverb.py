@@ -35,7 +35,6 @@ def describe_image(image_path, client):
     ],
     max_tokens=300,
     )
-    print(response.choices[0].message.content)
     return response.choices[0].message.content
     
 def estimate_reverb(image_path):
@@ -51,13 +50,15 @@ def estimate_reverb(image_path):
         {"role": "user", "content": "How much sonic reverberation would you expect in a room described in the following sentence. {}. Using only real numbers between 0.0 and 1.0.".format(sentence)},
         ]
     )
-    print(response.choices[0].message.content)
+    return sentence, response.choices[0].message.content
     
 def main():
     parser = argparse.ArgumentParser(description='image_path')
     parser.add_argument('-i', type=str, help='Path to the image file')
     args = parser.parse_args()
-    estimate_reverb(args.i)
+    sentence, reverb = estimate_reverb(args.i)
+    print(f"Sentence: {sentence}")
+    print(f"Reverb: {reverb}")
     
 if __name__ == "__main__":
     main()
