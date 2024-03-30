@@ -23,13 +23,15 @@ export default function App() {
     >
       <div
         style={{
+          boxSizing: "border-box",
           border: "4px solid green",
           width: "50%",
           height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          display: "grid",
+          placeItems: "center",
+          padding: "40px",
         }}
+        id="player-container"
       >
         <Player />
       </div>
