@@ -1,3 +1,4 @@
+import React from "react"
 import p5 from "p5";
 import { generate } from "./generate";
 import * as Tone from "tone";
@@ -132,9 +133,15 @@ const sketch = (p) => {
   }
 };
 
-document.querySelector('button')?.addEventListener('click', async (e) => {
-  await Tone.start();
-  console.log('audio is ready');
-  e.target.remove();
-  new p5(sketch);
-})
+export default function Player() {
+  const handleClick = async (e) => {
+    await Tone.start();
+    console.log('audio is ready');
+    e.target.remove();
+    new p5(sketch);
+  }
+
+  return (
+    <button onClick={handleClick}>Start</button>
+  );
+};
