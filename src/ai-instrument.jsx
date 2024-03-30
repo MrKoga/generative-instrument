@@ -17,8 +17,10 @@ const sketch = (p) => {
 
   let isGenerating = false;
   let toggleGenerated = false;
+  let roomSize = 0.5;
 
   const players = [];
+  const reverb = new Tone.Freeverb(roomSize, 1000).toDestination();
 
   // try different combinations of 256, 512, 768
   // you may increase/reduce the size depending on RAM available
@@ -49,17 +51,20 @@ const sketch = (p) => {
 
     for (let j = 0; j < 2; j++) {
       for (let i = 0; i < 4; i++) {
-        players.push(new AudioPlayer(i * 100 + 60, j * 100 + 80));
+        let player = new AudioPlayer(i * 100 + 60, j * 100 + 80);
+        player.player.connect(reverb);
+        players.push(player);
       }
     }
 
     players[0].load("/kick.mp3");
     players[1].load("/snare.mp3");
-    players[3].load("/kick.mp3");
-    players[4].load("/snare.mp3");
-    players[5].load("/kick.mp3");
-    players[6].load("/snare.mp3");
-    players[7].load("/kick.mp3");
+    players[2].load("/cymbal.mp3");
+    players[3].load("/hihat.mp3");
+    players[4].load("/noise.mp3");
+    players[5].load("/scratch.mp3");
+    players[6].load("/synth.mp3");
+    players[7].load("/square.mp3");
 
     p.noLoop();
     p.redraw();
@@ -69,10 +74,9 @@ const sketch = (p) => {
     p.background(50);
     p.stroke(0);
     p.fill(150);
-    for (let j = 0; j < 2; j++) {
-      for (let i = 0; i < 4; i++) {
-        p.rect(i * 100 + 60, j * 100 + 80, 90, 90);
-      }
+
+    for (let i = 0; i < players.length; i++) {
+      p.rect(players[i].x, players[i].y, players[i].w, players[i].h);
     }
   };
 
@@ -85,7 +89,17 @@ const sketch = (p) => {
   };
 
   p.keyPressed = () => {
-
+    if (p.key === '[') {
+      roomSize -= 0.1;
+      if (roomSize < 0) roomSize = 0;
+    } else if (p.key === ']') {
+      roomSize += 0.1;
+      if (roomSize > 1) roomSize = 1;
+    }
+    reverb.set({
+      roomSize: roomSize,
+    });
+    console.log("room size", roomSize);
   };
 
   async function generateAndDraw() {

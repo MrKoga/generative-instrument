@@ -4,7 +4,7 @@ class AudioPlayer {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.player = new Tone.Player().toDestination();
+    this.player = new Tone.Player();
     this.w = 90;
     this.h = 90;
   }
