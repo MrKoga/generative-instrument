@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import Player from "./ai-instrument"
 import data from "../instabase.json"
+import { GoArrowRight } from "react-icons/go"
 
 export default function App() {
   const roomData = data.query_result.data.rows.slice(1, 10)
@@ -19,12 +20,13 @@ export default function App() {
     <div
       style={{
         display: "flex",
+        gap: "40px",
       }}
     >
       <div
         style={{
           boxSizing: "border-box",
-          border: "4px solid green",
+          // border: "4px solid green",
           width: "50%",
           height: "100vh",
           display: "grid",
@@ -37,8 +39,21 @@ export default function App() {
       </div>
       <div
         style={{
-          width: "50%",
-          border: "4px solid yellow",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          // border: "4px solid blue",
+        }}
+      >
+        <div>
+          <GoArrowRight color="white" size={80} />
+        </div>
+      </div>
+      <div
+        style={{
+          // width: "50%",
+          // border: "4px solid yellow",
           position: "relative",
           height: "100vh",
           display: "flex",
@@ -48,7 +63,7 @@ export default function App() {
       >
         <div
           style={{
-            width: "400px",
+            // width: "400px",
             // height: "400px",
             // position: "absolute",
             // top: "0",
@@ -95,6 +110,34 @@ export default function App() {
           >
             Room reverb level: 0.3
           </div>
+        </div>
+      </div>
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          // border: "4px solid blue",
+        }}
+      >
+        <div>
+          <GoArrowRight color="white" size={80} />
+        </div>
+        <div
+          style={{
+            width: "200px",
+            display: "flex",
+            justifyContent: "center",
+            // border: "4px solid red",
+          }}
+        >
+          <img
+            style={{
+              height: "100px",
+            }}
+            src="ear.png"
+          />
         </div>
       </div>
     </div>
