@@ -19,7 +19,7 @@ We need to run 2 local servers - one for the Python LCM backend to generate imag
 1. Go to the URL displayed in the Terminal. ie. `http://localhost:5173`.
 1. Use `public` folder to store any external files such as images.
 1. If you need to install additional NPM packages, Run `npm install <name>`.
-1. In `index.html`, edit either `ai-instrument.js` script.
+1. In `index.html`, edit `ai-instrument.js` script.
 
 ### How to run LCM server
 
