@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import Player from "./ai-instrument"
 import data from "../instabase.json"
 import { GoArrowRight } from "react-icons/go"
+import axios from "axios"
 
 export default function App() {
   const roomData = data.query_result.data.rows.slice(1, 10)
@@ -15,6 +16,29 @@ export default function App() {
     setSelectedRoomData(thisRoomData)
   }, [selectedRoomId])
 
+  const [backgroundImage, setBackgroundImage] = useState("")
+
+  const handleImageClick = async () => {
+    console.log("Generating image...")
+    try {
+      const prompt = "Lighthouse on a cliff overlooking the ocean"
+      const response = await axios.post("http://localhost:5222/imageGen", {
+        prompt,
+      })
+
+      if (response.status === 200) {
+        console.log("Image generated successfully!")
+        const imageData = `data:image/webp;base64,${response.data.imageData}`
+        console.log("imageData: ", imageData)
+        setBackgroundImage(imageData)
+      } else {
+        console.error("Error generating image:", response.status)
+      }
+    } catch (error) {
+      console.error("Error generating image:", error)
+    }
+  }
+
   return (
     <div
       style={{
@@ -22,6 +46,20 @@ export default function App() {
         gap: "40px",
       }}
     >
+      {backgroundImage && (
+        <img
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "100vh",
+            width: "50%",
+          }}
+          src={backgroundImage}
+          alt="Generated Image"
+        />
+      )}
+
       <div
         style={{
           boxSizing: "border-box",
@@ -132,6 +170,7 @@ export default function App() {
           }}
         >
           <img
+            onClick={handleImageClick}
             style={{
               height: "100px",
             }}
