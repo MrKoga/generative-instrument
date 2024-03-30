@@ -2,31 +2,25 @@ import React, { useEffect, useState } from "react"
 import Player from "./ai-instrument"
 import data from "../instabase.json"
 import { GoArrowRight } from "react-icons/go"
+import { Canvas, useFrame } from '@react-three/fiber'
+
 
 export default function App() {
   const roomData = data.query_result.data.rows.slice(1, 10)
 
   const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id)
-  const [selectedRoomData, setSelectedRoomData] = useState(null)
-
-  useEffect(() => {
-    const thisRoomData = roomData.find(
-      (item) => item.room_id === selectedRoomId
-    )
-    setSelectedRoomData(thisRoomData)
-  }, [selectedRoomId])
 
   return (
     <div
       style={{
         display: "flex",
         gap: "40px",
+        backgroundImage: url("paper.gif");
       }}
     >
       <div
         style={{
           boxSizing: "border-box",
-          // border: "4px solid green",
           width: "50%",
           height: "100vh",
           display: "grid",
@@ -63,11 +57,6 @@ export default function App() {
       >
         <div
           style={{
-            // width: "400px",
-            // height: "400px",
-            // position: "absolute",
-            // top: "0",
-            // right: "0",
             display: "flex",
             justifyContent: "end",
             alignItems: "center",
@@ -75,11 +64,12 @@ export default function App() {
             border: "4px solid red",
             backgroundColor: "red",
             padding: "20px",
+            gap: "20px",
           }}
         >
           <img
             style={{
-              border: "4px solid blue",
+              // border: "4px solid blue",
               width: "200px",
               height: "200px",
               objectFit: "cover",
@@ -108,7 +98,15 @@ export default function App() {
               color: "white",
             }}
           >
-            Room reverb level: 0.3
+            Room reverb level:{" "}
+            <span
+              style={{
+                color: "white",
+                fontSize: "20px",
+              }}
+            >
+              0.3
+            </span>
           </div>
         </div>
       </div>
@@ -141,5 +139,16 @@ export default function App() {
         </div>
       </div>
     </div>
+  )
+}
+
+
+function MyCanvas() {
+  return (
+    <Canvas>
+      <ambientLight />
+      <pointLight position={[10, 10, 10]} />
+      <Box />
+    </Canvas>
   )
 }
