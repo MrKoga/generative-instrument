@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>p5 sketch</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background: #222;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      canvas {
+        display: block;
+      }
+      .input-container {
+        box-sizing: border-box;
+        margin: 0;
+        width: 100%;
+        display: flex;
+      }
+      .input-container input[type="color"] {
+        width: 30px;
+      }
+      .input-container input[type="text"] {
+        padding: 4px;
+        flex-grow: 10;
+        border: 0;
+        font-size: 16px;
+      }
+      .input-container button {
+        flex-grow: 2;
+        font-size: 16px;
+      }
+      .input-container button[disabled] {
+        background: lightgray;
+        color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <script type="module" src="./src/code-drawing.js"></script> -->
+    <button>Start</button>
+    <script type="module" src="./src/ai-instrument.js"></script>
+  </body>
+</html>
