@@ -5,6 +5,9 @@ const fs = require("fs")
 const axios = require("axios")
 const FormData = require("form-data")
 const cors = require("cors")
+const dotenv = require("dotenv")
+
+dotenv.config()
 
 app.use(cors())
 
@@ -62,8 +65,7 @@ app.post("/imageGen", async (req, res) => {
       {
         headers: {
           ...formData.getHeaders(),
-          Authorization:
-            "Bearer sk-pMw2w3SB1SQeD0dyChEdSkW851YpPTliE2F0TZcxoqTjHrgj",
+          Authorization: `Bearer ${process.env.STABILITY_TOKEN}`,
           Accept: "image/*",
         },
         responseType: "arraybuffer",
