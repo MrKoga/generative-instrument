@@ -2,29 +2,25 @@ import React, { useEffect, useState } from "react"
 import Player from "./ai-instrument"
 import data from "../instabase.json"
 import { GoArrowRight } from "react-icons/go"
-import { Canvas, useFrame } from '@react-three/fiber'
-
+import { Canvas, useFrame } from "@react-three/fiber"
 
 export default function App() {
-  const roomData = data.query_result.data.rows.slice(1, 10);
+  const roomData = data.query_result.data.rows.slice(1, 10)
 
   const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id)
-  const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id);
-  const [selectedRoomData, setSelectedRoomData] = useState(null);
+
+  const [selectedRoomData, setSelectedRoomData] = useState(null)
 
   useEffect(() => {
-    const thisRoomData = roomData.find(
-      (item) => item.room_id == selectedRoomId
-    );
-    setSelectedRoomData(thisRoomData);
-  }, [selectedRoomId]);
+    const thisRoomData = roomData.find((item) => item.room_id == selectedRoomId)
+    setSelectedRoomData(thisRoomData)
+  }, [selectedRoomId])
 
   return (
     <div
       style={{
         display: "flex",
         gap: "40px",
-        backgroundImage: url("paper.gif");
       }}
     >
       <div
@@ -92,7 +88,7 @@ export default function App() {
             }}
             value={selectedRoomId}
             onChange={(e) => {
-              setSelectedRoomId(e.target.value);
+              setSelectedRoomId(e.target.value)
             }}
           >
             {roomData.map((item) => (
@@ -145,5 +141,5 @@ export default function App() {
         </div>
       </div>
     </div>
-  );
+  )
 }
