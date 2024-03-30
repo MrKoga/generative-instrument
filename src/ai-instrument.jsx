@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import p5 from "p5";
 import { generate } from "./generate";
 import * as Tone from "tone";
@@ -46,8 +46,10 @@ const sketch = (p) => {
     pg = p.createGraphics(width, height);
     aiImg = p.createGraphics(width, height);
 
+    canvas.parent(document.querySelector("#player-container"));
+
     // set parent after canvas is created
-    inputContainer.parent(document.querySelector("main"));
+    inputContainer.parent(document.querySelector("#player-container"));
 
     for (let j = 0; j < 2; j++) {
       for (let i = 0; i < 4; i++) {
@@ -89,10 +91,10 @@ const sketch = (p) => {
   };
 
   p.keyPressed = () => {
-    if (p.key === '[') {
+    if (p.key === "[") {
       roomSize -= 0.1;
       if (roomSize < 0) roomSize = 0;
-    } else if (p.key === ']') {
+    } else if (p.key === "]") {
       roomSize += 0.1;
       if (roomSize > 1) roomSize = 1;
     }
@@ -150,12 +152,10 @@ const sketch = (p) => {
 export default function Player() {
   const handleClick = async (e) => {
     await Tone.start();
-    console.log('audio is ready');
+    console.log("audio is ready");
     e.target.remove();
-    new p5(sketch);
-  }
+    new p5(sketch, document.querySelector("#player-container"));
+  };
 
-  return (
-    <button onClick={handleClick}>Start</button>
-  );
-};
+  return <button onClick={handleClick}>Start</button>;
+}
