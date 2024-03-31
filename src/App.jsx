@@ -7,6 +7,7 @@ export default function App() {
   const roomData = data.query_result.data.rows.slice(1, 10);
 
   const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id);
+  const [roomDescription, setRoomDescription] = useState("");
 
   const [selectedRoomData, setSelectedRoomData] = useState(null);
 
@@ -20,7 +21,7 @@ export default function App() {
     const data = await response.json();
     if (data.status === "success") {
       const reverb = JSON.parse(data.reverb);
-      console.log(reverb);
+      setRoomDescription(data.sentence);
       const reverbLevel = parseFloat(reverb.sonic_reverberation);
       document.getElementById("reverb_level").dataset.reverbLevel = Math.min(
         reverbLevel,
@@ -74,8 +75,6 @@ export default function App() {
       </div>
       <div
         style={{
-          // width: "50%",
-          // border: "4px solid yellow",
           position: "relative",
           height: "100vh",
           display: "flex",
@@ -86,6 +85,7 @@ export default function App() {
         <div
           style={{
             display: "flex",
+            maxWidth: "250px",
             justifyContent: "end",
             alignItems: "center",
             flexDirection: "column",
@@ -98,15 +98,15 @@ export default function App() {
           <img
             style={{
               // border: "4px solid blue",
-              width: "200px",
-              height: "200px",
+              width: "250px",
+              height: "250px",
               objectFit: "cover",
             }}
             src={`/images/${selectedRoomId}.webp`}
           />
           <select
             style={{
-              width: "200px",
+              width: "250px",
               height: "30px",
             }}
             value={selectedRoomId}
@@ -130,6 +130,7 @@ export default function App() {
             <span id="reverb_level" data-reverb-level="0.3">
               0.3
             </span>
+            <p>{roomDescription}</p>
           </div>
         </div>
       </div>
