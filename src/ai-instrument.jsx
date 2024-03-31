@@ -21,7 +21,7 @@ const sketch = (p) => {
   const MAX_ROOM_SIZE = 400
 
   const players = []
-  const reverb = new Tone.Freeverb(roomSize, 1000).toDestination()
+  const reverb = new Tone.Reverb(roomSize, 1000).toDestination()
 
   // try different combinations of 256, 512, 768
   // you may increase/reduce the size depending on RAM available
@@ -33,7 +33,7 @@ const sketch = (p) => {
   // set up DOM elements
   const inputContainer = p.createDiv()
   inputContainer.class("input-container")
-  const promptInput = p.createElement("textarea", prompt);
+  const promptInput = p.createElement("textarea", prompt)
   promptInput.parent(inputContainer)
   generateButton = p.createButton("generate")
   generateButton.parent(inputContainer)
@@ -121,7 +121,7 @@ const sketch = (p) => {
     p.fill(0, 80, 120)
     p.rect(60, 30, 390, 100)
 
-    p.fill(0);
+    p.fill(0)
     for (let i = 0; i < 5; i++) {
       p.ellipse(i * 80 + 70, 150, 50, 50)
       p.rect(i * 80 + 70, 220, 50, 30)
