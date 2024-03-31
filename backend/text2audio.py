@@ -2,9 +2,11 @@
 Official documentation: https://github.com/facebookresearch/audiocraft/tree/main
 
 Installations
+
 In order to install torch 2.1.0, use pyenv etc. to change the python version to 3.10.4!
 $python -m pip install 'torch==2.1.0'
 $pip install torchvision==0.16.0
+
 # You might need the following before trying to install the packages
 python -m pip install setuptools wheel
 # Then proceed to one of the following
@@ -25,12 +27,13 @@ import argparse
 """ Input prompt and convert text to audio """
 def text2audio(prompt: str):
     model = AudioGen.get_pretrained('facebook/audiogen-medium')
-    model.set_generation_params(duration=5)  # generate 5 seconds.
+    model.set_generation_params(duration=5)  #TODO Specify how many seconds to divide into
     descriptions = prompt
     wav = model.generate(descriptions)  
 
     for idx, one_wav in enumerate(wav):
         # Will save under {idx}.wav, with loudness normalization at -14 db LUFS.
+        #TODO Chage file path to save the audio file
         audio_write(f'{idx}', one_wav.cpu(), model.sample_rate, strategy="loudness", loudness_compressor=True)
         
 def main():
