@@ -18,6 +18,7 @@ def reverb(item_id):
             "reverb": response[1]
         }
         if item:
+            print(response[0])
             return jsonify(item)
         else:
             return jsonify({"status": "error"}), 404

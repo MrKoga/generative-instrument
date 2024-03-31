@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import Player from "./ai-instrument"
 import data from "../instabase.json"
 import { GoArrowRight } from "react-icons/go"
+import { ScaleLoader } from "react-spinners"
 
 export default function App() {
   const roomData = data.query_result.data.rows.slice(1, 10)
@@ -10,18 +11,19 @@ export default function App() {
   const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id)
   const [roomDescription, setRoomDescription] = useState("")
 
-  const [selectedRoomData, setSelectedRoomData] = useState(null)
+  // const [selectedRoomData, setSelectedRoomData] = useState(null)
 
-  const getReverbLevel = async () => {
-    const response = await fetch(
-      `http://127.0.0.1:5000/api/reverb/${selectedRoomId}`,
-      {
-        mode: "cors",
-      }
-    )
+  const [isLoading, setIsLoading] = useState(false)
+
+  const getReverbLevel = async (roomId) => {
+    const response = await fetch(`http://127.0.0.1:5000/api/reverb/${roomId}`, {
+      mode: "cors",
+    })
     const data = await response.json()
     if (data.status === "success") {
+      setIsLoading(false)
       const reverb = JSON.parse(data.reverb)
+      console.log(data.sentence)
       setRoomDescription(data.sentence)
       const reverbLevel = parseFloat(reverb.sonic_reverberation)
       document.getElementById("reverb_level").dataset.reverbLevel = Math.min(
@@ -30,14 +32,51 @@ export default function App() {
       )
       console.log("Reverb level", reverbLevel)
     } else {
+      setIsLoading(false)
       console.log("Failed to get reverb level")
     }
   }
 
+  // useEffect(() => {
+  //   // console.log("ROOM ID: ", selectedRoomId)
+  //   // const thisRoomData = roomData.find((item) => item.room_id == selectedRoomId)
+  //   // setSelectedRoomData(thisRoomData)
+  //   setIsLoading(true)
+  //   getReverbLevel(selectedRoomId)
+  // }, [selectedRoomId])
+
   useEffect(() => {
-    const thisRoomData = roomData.find((item) => item.room_id == selectedRoomId)
-    setSelectedRoomData(thisRoomData)
-    getReverbLevel()
+    console.log("HERE", roomDescription)
+  }, [roomDescription])
+
+  useEffect(() => {
+    const fetchReverbLevel = async () => {
+      setIsLoading(true)
+      const response = await fetch(
+        `http://127.0.0.1:5000/api/reverb/${selectedRoomId}`,
+        {
+          mode: "cors",
+        }
+      )
+      const data = await response.json()
+      if (data.status === "success") {
+        setIsLoading(false)
+        const reverb = JSON.parse(data.reverb)
+        console.log(data.sentence)
+        setRoomDescription(data.sentence)
+        const reverbLevel = parseFloat(reverb.sonic_reverberation)
+        document.getElementById("reverb_level").dataset.reverbLevel = Math.min(
+          reverbLevel,
+          0.9
+        )
+        console.log("Reverb level", reverbLevel)
+      } else {
+        setIsLoading(false)
+        console.log("Failed to get reverb level")
+      }
+    }
+
+    fetchReverbLevel()
   }, [selectedRoomId])
 
   return (
@@ -126,10 +165,29 @@ export default function App() {
             }}
           >
             Room reverb level:{" "}
-            <span id="reverb_level" data-reverb-level="0.3">
+            <span
+              style={{
+                display: isLoading ? "none" : "block",
+              }}
+              id="reverb_level"
+              data-reverb-level="0.3"
+            >
               0.3
             </span>
-            <p>{roomDescription}</p>
+            <ScaleLoader
+              style={{
+                display: isLoading ? "block" : "none",
+              }}
+              color="blue"
+            />
+            <p
+              id="room-description"
+              style={{
+                display: isLoading ? "none" : "block",
+              }}
+            >
+              {roomDescription}
+            </p>
           </div>
         </div>
       </div>
@@ -139,7 +197,6 @@ export default function App() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          // border: "4px solid blue",
         }}
       >
         <div>
