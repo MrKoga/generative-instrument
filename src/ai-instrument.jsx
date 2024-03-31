@@ -140,12 +140,6 @@ const sketch = (p) => {
     }
   }
 
-  p.keyPressed = () => {
-    if (p.key === " ") {
-      p.setup()
-    }
-  }
-
   async function generateAndDraw() {
     if (isGenerating) {
       console.warn("processing previous request..")
