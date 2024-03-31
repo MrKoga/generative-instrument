@@ -28,8 +28,7 @@ import argparse
 def text2audio(prompt: str):
     model = AudioGen.get_pretrained('facebook/audiogen-medium')
     model.set_generation_params(duration=5)  #TODO Specify how many seconds to divide into
-    descriptions = prompt
-    wav = model.generate(descriptions)  
+    wav = model.generate(prompt) # output: list of torch.Tensor as wav
 
     for idx, one_wav in enumerate(wav):
         # Will save under {idx}.wav, with loudness normalization at -14 db LUFS.
