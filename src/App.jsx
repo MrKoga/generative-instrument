@@ -6,48 +6,10 @@ import { ScaleLoader } from "react-spinners"
 
 export default function App() {
   const roomData = data.query_result.data.rows.slice(1, 10)
-  console.log("Room data", roomData)
 
   const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id)
   const [roomDescription, setRoomDescription] = useState("")
-
-  // const [selectedRoomData, setSelectedRoomData] = useState(null)
-
   const [isLoading, setIsLoading] = useState(false)
-
-  const getReverbLevel = async (roomId) => {
-    const response = await fetch(`http://127.0.0.1:5000/api/reverb/${roomId}`, {
-      mode: "cors",
-    })
-    const data = await response.json()
-    if (data.status === "success") {
-      setIsLoading(false)
-      const reverb = JSON.parse(data.reverb)
-      console.log(data.sentence)
-      setRoomDescription(data.sentence)
-      const reverbLevel = parseFloat(reverb.sonic_reverberation)
-      document.getElementById("reverb_level").dataset.reverbLevel = Math.min(
-        reverbLevel,
-        0.9
-      )
-      console.log("Reverb level", reverbLevel)
-    } else {
-      setIsLoading(false)
-      console.log("Failed to get reverb level")
-    }
-  }
-
-  // useEffect(() => {
-  //   // console.log("ROOM ID: ", selectedRoomId)
-  //   // const thisRoomData = roomData.find((item) => item.room_id == selectedRoomId)
-  //   // setSelectedRoomData(thisRoomData)
-  //   setIsLoading(true)
-  //   getReverbLevel(selectedRoomId)
-  // }, [selectedRoomId])
-
-  useEffect(() => {
-    console.log("HERE", roomDescription)
-  }, [roomDescription])
 
   useEffect(() => {
     const fetchReverbLevel = async () => {
