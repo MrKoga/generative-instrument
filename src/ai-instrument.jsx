@@ -195,32 +195,33 @@ const sketch = (p) => {
     ]
     const octave = Math.floor(note / 12) - 1
     const noteName = noteNames[note % 12]
+    console.log(note)
 
     switch (status) {
       case 0x90:
         switch (note) {
-          case 36:
+          case 40:
             players[0].play()
             break
-          case 38:
+          case 41:
             players[1].play()
             break
           case 42:
             players[2].play()
             break
-          case 46:
+          case 43:
             players[3].play()
             break
-          case 48:
+          case 36:
             players[4].play()
             break
-          case 49:
+          case 37:
             players[5].play()
             break
-          case 50:
+          case 38:
             players[6].play()
             break
-          case 51:
+          case 39:
             players[7].play()
             break
           default:
