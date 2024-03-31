@@ -1,5 +1,9 @@
 """
 Official documentation: https://github.com/facebookresearch/audiocraft/tree/main
+
+Installations
+pip install modal
+python3 -m modal setup
 """
 
 
