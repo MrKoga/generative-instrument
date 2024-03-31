@@ -9,6 +9,7 @@ CORS(app)
 # API endpoint
 @app.route('/api/reverb/<int:item_id>', methods=['GET'])
 def reverb(item_id):
+    print("Item ID: ", item_id)
     try:
         response = estimate_reverb("../images/" + str(item_id) + ".webp")
         item = {
