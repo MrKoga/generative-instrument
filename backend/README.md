@@ -58,3 +58,37 @@ Using seed: 48404
 | --steps       | int   | 8       | The number of inference steps.                                |
 | --seed        | int   | None    | Seed for random number generation.                            |
 | --continuous  | flag  | False   | Enable continuous generation.                                 |
+
+## Usage Text to Audio
+### Installation
+#### If run locally
+Official repo: https://github.com/facebookresearch/audiocraft/tree/main
+```
+# In order to install torch 2.1.0, use pyenv etc. to change the python version to 3.10.4!
+python -m pip install 'torch==2.1.0'
+pip install torchvision==0.16.0
+
+# You might need the following before trying to install the packages
+python -m pip install setuptools wheel
+# Then proceed to one of the following
+python -m pip install -U audiocraft  # stable release
+python -m pip install -U git+https://git@github.com/facebookresearch/audiocraft#egg=audiocraft  # bleeding edge
+python -m pip install -e .  # or if you cloned the repo locally (mandatory if you want to train).
+```
+#### If run with modal
+```
+pip install modal
+python3 -m modal setup
+```
+### Usage
+#### If run locally
+```
+python3 -m venv venv
+source ./venv/bin/activate
+# Do the above installation
+python text2audio.py -p "<Prompt to convert to audio>" 
+```
+#### If run with modal
+```
+modal run text2audio_modal.py --prompt "<prompt>"
+```
