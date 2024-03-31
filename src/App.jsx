@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Player from "./ai-instrument";
-import data from "../instabase.json";
-import { GoArrowRight } from "react-icons/go";
+import React, { useEffect, useState } from "react"
+import Player from "./ai-instrument"
+import data from "../instabase.json"
+import { GoArrowRight } from "react-icons/go"
 
 export default function App() {
-  const roomData = data.query_result.data.rows.slice(1, 10);
+  const roomData = data.query_result.data.rows.slice(1, 10)
+  console.log("Room data", roomData)
 
-  const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id);
-  const [roomDescription, setRoomDescription] = useState("");
+  const [selectedRoomId, setSelectedRoomId] = useState(roomData[0].room_id)
+  const [roomDescription, setRoomDescription] = useState("")
 
-  const [selectedRoomData, setSelectedRoomData] = useState(null);
+  const [selectedRoomData, setSelectedRoomData] = useState(null)
 
   const getReverbLevel = async () => {
     const response = await fetch(
@@ -17,28 +18,27 @@ export default function App() {
       {
         mode: "cors",
       }
-    );
-    const data = await response.json();
+    )
+    const data = await response.json()
     if (data.status === "success") {
-      const reverb = JSON.parse(data.reverb);
-      setRoomDescription(data.sentence);
-      const reverbLevel = parseFloat(reverb.sonic_reverberation);
+      const reverb = JSON.parse(data.reverb)
+      setRoomDescription(data.sentence)
+      const reverbLevel = parseFloat(reverb.sonic_reverberation)
       document.getElementById("reverb_level").dataset.reverbLevel = Math.min(
         reverbLevel,
         0.9
-      );
-      console.log("Reverb level", reverbLevel);
+      )
+      console.log("Reverb level", reverbLevel)
     } else {
-      console.log("Failed to get reverb level");
+      console.log("Failed to get reverb level")
     }
-  };
+  }
 
   useEffect(() => {
-    const thisRoomData = roomData.find(
-      (item) => item.room_id == selectedRoomId
-    );
-    setSelectedRoomData(thisRoomData);
-  }, [selectedRoomId]);
+    const thisRoomData = roomData.find((item) => item.room_id == selectedRoomId)
+    setSelectedRoomData(thisRoomData)
+    getReverbLevel()
+  }, [selectedRoomId])
 
   return (
     <div
@@ -111,8 +111,7 @@ export default function App() {
             }}
             value={selectedRoomId}
             onChange={(e) => {
-              setSelectedRoomId(e.target.value);
-              getReverbLevel();
+              setSelectedRoomId(e.target.value)
             }}
           >
             {roomData.map((item) => (
@@ -163,5 +162,5 @@ export default function App() {
         </div>
       </div>
     </div>
-  );
+  )
 }
