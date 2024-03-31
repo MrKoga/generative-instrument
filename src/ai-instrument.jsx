@@ -140,7 +140,11 @@ const sketch = (p) => {
     }
   }
 
-  p.keyPressed = () => {}
+  p.keyPressed = () => {
+    if (p.key === " ") {
+      p.setup()
+    }
+  }
 
   async function generateAndDraw() {
     if (isGenerating) {
