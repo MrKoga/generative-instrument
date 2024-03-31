@@ -1,39 +1,44 @@
-# Latent Consistency Model and p5js running locally on Mac
+# AI-coustic: AI-Powered Electronic Instrument Web App
 
-https://designersdecode.gumroad.com/
+AI-coustic is an innovative web app that harnesses the power of multiple AI technologies to create an immersive, interactive electronic instrument with a customizable UI and intelligent audio effects.
 
-## Prerequisites
+## Features
 
-- Python: I suggest you install a virtual environment.
-- [Node.js](https://nodejs.org/en): to run the Vitejs dev server.
+- **Sampler Section**: Built with p5.js, the sampler section provides an interactive UI for playing sounds. The default UI skin can be updated with an AI-generated image by prompting the locally running Stability AI image generation model through the text box below.
 
-## How-to
+- **Effect Section**: The effect section uses a room image from the Instabase database to intelligently estimate the reverb level for the sampler sound. It works as follows:
 
-We need to run 2 local servers - one for the Python LCM backend to generate images and the other to write our p5js sketch and send/receive the canvas image to/from the model.
+1.  The Open AI Vision API generates a description of the provided room image.
+2.  A text-to-text Open AI prompt based on the image description returns a reverb amount in JSON format.
+3.  The reverb level is used to control the reverb effect (implemented with Tone.js) that is applied to the sampler sound.
 
-### How to run p5js sketch
+- **AI-Generated Sampler Sounds**: The original sampler sounds were created by Stable Audio using AI generation techniques.
 
-1. In Terminal, `cd` into the root of the project folder.
-1. Run `npm install` to install the dependencies.
-1. Run `npm run dev` to run the local server.
-1. Go to the URL displayed in the Terminal. ie. `http://localhost:5173`.
-1. Use `public` folder to store any external files such as images.
-1. If you need to install additional NPM packages, Run `npm install <name>`.
-1. In `index.html`, edit `ai-instrument.js` script.
+## Technologies Used
 
-### How to run LCM server
+- p5.js: For interactive UI elements in the sampler section
+- Stability AI: Local image generation model for updating the sampler UI skin
+- Open AI Vision API: Describes the room image for the effect section
+- Open AI Text-to-Text: Generates reverb level in JSON format based on the room description
+- Instabase: Database providing the room image for the effect section
+- Tone.js: Applies the AI-controlled reverb effect to the sampler sound
+- Stable Audio: AI-generated original sampler sounds
 
-1. In terminal, `cd` into `backend` directory.
-1. Create a new environment: `python3 -m venv lcm`.
-1. Then, activate the environment: `source lcm/bin/activate`.
-1. Run `pip install -r requirements.txt` to install the dependencies.
-1. Run `python serve.py`.
-1. Wait until the server starts and loads the models.
-1. It will download the models from the web the first time you run it.
-1. Once it's ready, you can start generating images from your p5js sketch.
+## Setup and Usage
+
+1. Clone the repository and navigate to the project directory.
+2. Install the required dependencies.
+3. Set up the necessary API keys and local AI models.
+4. Launch the web app and interact with the sampler section.
+5. Customize the sampler UI skin by prompting the Stability AI model through the provided text box.
+6. Explore the intelligent reverb effect based on the room image in the effect section.
+
+Please refer to the detailed setup and usage instructions in the [documentation](link-to-documentation).
+
+## Contributing
+
+Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
 
 ## License
 
-- The frontend code is licensed under MIT license.
-- The backend code is modified from Replicate's [latent-consistency-model](https://github.com/replicate/latent-consistency-model/tree/prototype) and licensed under MIT license.
-- Img2Img Python code is licensed under Apache License, Version 2.0.
+AI-coustic is licensed under the [MIT License](link-to-license-file).
