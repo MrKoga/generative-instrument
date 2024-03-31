@@ -33,7 +33,7 @@ const sketch = (p) => {
   // set up DOM elements
   const inputContainer = p.createDiv()
   inputContainer.class("input-container")
-  const promptInput = p.createInput(prompt)
+  const promptInput = p.createElement("textarea", prompt);
   promptInput.parent(inputContainer)
   generateButton = p.createButton("generate")
   generateButton.parent(inputContainer)
@@ -80,7 +80,7 @@ const sketch = (p) => {
 
     for (let j = 0; j < 2; j++) {
       for (let i = 0; i < 4; i++) {
-        let player = new AudioPlayer(i * 100 + 60, j * 100 + 160)
+        let player = new AudioPlayer(i * 100 + 60, j * 100 + 280)
         player.player.connect(reverb)
         players.push(player)
       }
@@ -95,6 +95,8 @@ const sketch = (p) => {
     players[6].load("/synth.mp3")
     players[7].load("/square.mp3")
 
+    p.ellipseMode(p.CORNER)
+
     p.noLoop()
     p.redraw()
   }
@@ -107,6 +109,27 @@ const sketch = (p) => {
     for (let i = 0; i < players.length; i++) {
       p.rect(players[i].x, players[i].y, players[i].w, players[i].h)
     }
+
+    // Pads
+    p.noStroke()
+    p.fill(150)
+    for (let i = 0; i < players.length; i++) {
+      p.rect(players[i].x, players[i].y, players[i].w, players[i].h)
+    }
+
+    // meaningless UIs
+    p.fill(0, 80, 120)
+    p.rect(60, 30, 390, 100)
+
+    p.fill(0);
+    for (let i = 0; i < 5; i++) {
+      p.ellipse(i * 80 + 70, 150, 50, 50)
+      p.rect(i * 80 + 70, 220, 50, 30)
+    }
+
+    p.fill(250, 0, 0)
+    p.rect(0, 0, 20, 512)
+    p.rect(492, 0, 20, 512)
   }
 
   p.mousePressed = () => {
@@ -128,7 +151,7 @@ const sketch = (p) => {
     isGenerating = true
 
     generateButton.attribute("disabled", true)
-    generateButton.html("generating")
+    generateButton.html("Generating")
 
     // resize main canvas to fit into the model
     const tempCanvas = p.createGraphics(width, height)
@@ -156,7 +179,7 @@ const sketch = (p) => {
     toggleGenerated = true
 
     generateButton.removeAttribute("disabled")
-    generateButton.html("generate")
+    generateButton.html("Generate")
 
     p.image(aiImg, 0, 0)
 

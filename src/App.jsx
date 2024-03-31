@@ -20,6 +20,7 @@ export default function App() {
     const data = await response.json();
     if (data.status === "success") {
       const reverb = JSON.parse(data.reverb);
+      console.log(reverb);
       const reverbLevel = parseFloat(reverb.sonic_reverberation);
       document.getElementById("reverb_level").dataset.reverbLevel = Math.min(
         reverbLevel,
