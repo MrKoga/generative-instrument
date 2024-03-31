@@ -50,7 +50,7 @@ const sketch = (p) => {
     const reverbLevelNode = document.getElementById("reverb_level");
     const config = { attributes: true, childList: true, subtree: true };
     reverbLevelNode.innerText = 0.3;
-    console.log("set reverb", +reverbLevelNode.dataset.reverbLevel);
+    console.log("set room size to", +reverbLevelNode.dataset.reverbLevel);
     reverb.set({
       roomSize: +reverbLevelNode.dataset.reverbLevel,
     });
@@ -60,8 +60,11 @@ const sketch = (p) => {
         if (mutation.type === "childList") {
           console.log("A child node has been added or removed.");
         } else if (mutation.type === "attributes") {
+          const roomSize = +reverbLevelNode.dataset.reverbLevel;
+          console.log("set room size to", roomSize);
+          reverbLevelNode.innerText = roomSize;
           reverb.set({
-            roomSize: +reverbLevelNode.dataset.reverbLevel,
+            roomSize: roomSize,
           });
         }
       }
@@ -77,7 +80,7 @@ const sketch = (p) => {
 
     for (let j = 0; j < 2; j++) {
       for (let i = 0; i < 4; i++) {
-        let player = new AudioPlayer(i * 100 + 60, j * 100 + 80);
+        let player = new AudioPlayer(i * 100 + 60, j * 100 + 160);
         player.player.connect(reverb);
         players.push(player);
       }
