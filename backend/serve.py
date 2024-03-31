@@ -9,6 +9,9 @@ import uvicorn
 import os
 import sys
 
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 log = structlog.get_logger("cog.server.http")
 
 if __name__ == "__main__":
