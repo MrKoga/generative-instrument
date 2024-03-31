@@ -32,6 +32,27 @@ export default function App() {
     }
   };
 
+  const getReverbLevel = async () => {
+    const response = await fetch(
+      `http://127.0.0.1:5000/api/reverb/${selectedRoomId}`,
+      {
+        mode: "cors",
+      }
+    );
+    const data = await response.json();
+    if (data.status === "success") {
+      const reverb = JSON.parse(data.reverb);
+      const reverbLevel = parseFloat(reverb.sonic_reverberation);
+      document.getElementById("reverb_level").dataset.reverbLevel = Math.min(
+        reverbLevel,
+        0.9
+      );
+      console.log("Reverb level", reverbLevel);
+    } else {
+      console.log("Failed to get reverb level");
+    }
+  };
+
   useEffect(() => {
     const thisRoomData = roomData.find((item) => item.room_id == selectedRoomId)
     setSelectedRoomData(thisRoomData)
