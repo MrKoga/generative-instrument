@@ -42,6 +42,7 @@ export default function App() {
       style={{
         display: "flex",
         gap: "40px",
+        backgroundImage: url("paper.gif");
       }}
     >
       <div
@@ -158,5 +159,16 @@ export default function App() {
         </div>
       </div>
     </div>
+  )
+}
+
+
+function MyCanvas() {
+  return (
+    <Canvas>
+      <ambientLight />
+      <pointLight position={[10, 10, 10]} />
+      <Box />
+    </Canvas>
   )
 }
